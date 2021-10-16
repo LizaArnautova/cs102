@@ -12,17 +12,17 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     if notupp == 1:
         plaintext = plaintext.upper()
 
-    list = []
+    List = []
     for i in range(len(plaintext)):
         a = ord(plaintext[i]) + key[i]
         if 65 <= a <= 90:
-            list.append(a)
+            List.append(a)
         elif 32 <= a <= 64:
-            list.append(a - key[i])
+            List.append(a - key[i])
         else:
-            list.append(a - 26)
+            List.append(a - 26)
 
-    ciphertext = "".join([chr(i) for i in list])
+    ciphertext = "".join([chr(i) for i in List])
     if notupp == 1:
         ciphertext = ciphertext.lower()
 
@@ -43,17 +43,18 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     if notupp == 1:
         ciphertext = ciphertext.upper()
 
-    list = []
+    List = []
     for i in range(len(ciphertext)):
         a = ord(ciphertext[i]) - key[i]
         if 65 <= a <= 90:
-            list.append(a)
+            List.append(a)
         elif 32 <= a <= 64:
-            list.append(a + 26)
+            List.append(a + 26)
         else:
-            list.append(a + 26)
+            List.append(a + 26)
 
-    plaintext = "".join([chr(i) for i in list])
+    plaintext = "".join([chr(i) for i in List])
     if notupp == 1:
         plaintext = plaintext.lower()
     return plaintext
+
