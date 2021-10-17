@@ -57,4 +57,3 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     if notupp == 1:
         plaintext = plaintext.lower()
     return plaintext
-
