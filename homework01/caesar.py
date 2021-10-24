@@ -72,6 +72,3 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
             answ.append(b)
     plaintext = "".join([i for i in answ])
     return plaintext
-
-
-print(encrypt_caesar("Yrigw-An jPDOoqBBDUSTwqpVLZOVO uhzYyHAHLYU,Z,vtkDbITRma pmcOWo-n", 15))
