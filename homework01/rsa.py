@@ -39,8 +39,15 @@ def multiplicative_inverse(e: int, phi: int) -> int:
     >>> multiplicative_inverse(7, 40)
     23
     """
-    # PUT YOUR CODE HERE
-    pass
+    x, xx, y, yy = 1, 0, 0, 1
+    c = phi
+    while phi:
+        q = e // phi
+        e, phi = phi, e % phi
+        x, xx = xx, x - xx * q
+        y, yy = yy, y - yy * q
+    d = x % c
+    return d
 
 
 def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
@@ -105,3 +112,4 @@ if __name__ == "__main__":
     print("Decrypting message with public key ", public, " . . .")
     print("Your message is:")
     print(decrypt(public, encrypted_msg))
+
