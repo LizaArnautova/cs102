@@ -22,7 +22,10 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
         else:
             notlow = 1
 
-        current_symbol = ord(plaintext[i]) + shift if notlow == 0 else ord(plaintext[i].lower()) + shift
+        if notlow == 0:
+            current_symbol = ord(plaintext[i]) + shift
+        else:
+            current_symbol = ord(plaintext[i].lower()) + shift
 
         if ord("a") <= current_symbol <= ord("z"):
             list_.append(current_symbol)
@@ -63,7 +66,11 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
             notlow = 0
         else:
             notlow = 1
-        current_symbol = ord(ciphertext[i]) - shift if notlow == 0 else ord(ciphertext[i].lower()) - shift
+
+        if notlow == 0:
+            current_symbol = ord(ciphertext[i]) - shift
+        else:
+            current_symbol = ord(ciphertext[i].lower()) - shift
 
         if ord("a") <= current_symbol <= ord("z"):
             list_.append(current_symbol)
