@@ -10,13 +10,22 @@ def is_prime(n: int) -> bool:
     True
     >>> is_prime(8)
     False
+    >>> is_prime(1)
+    False
+    >>> is_prime(-7)
+    True
+    >>> is_prime(-10)
+    False
     """
+    if n < 0:
+        n = n * -1
     if n == 1:
         return False
-    d = 2
-    while d * d <= n and n % d != 0:
-        d += 1
-    return d * d > n
+
+    i = 2
+    while i * i <= n and n % i != 0:
+        i += 1
+    return i * i > n
 
 
 def gcd(a: int, b: int) -> int:
@@ -59,10 +68,8 @@ def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[in
         raise ValueError("p and q cannot be equal")
 
     n = p * q
-    # PUT YOUR CODE HERE
 
     phi = (p - 1) * (q - 1)
-    # PUT YOUR CODE HERE
 
     # Choose an integer e such that e and phi(n) are coprime
     e = random.randrange(1, phi)

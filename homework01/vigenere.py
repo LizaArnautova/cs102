@@ -15,28 +15,33 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
         keyword += keyword
     shift = []
     for i in range(len(plaintext)):
-        a = ord(keyword[i]) - 97 if ord(keyword[i]) - 65 > 25 else ord(keyword[i]) - 65
-        shift.append(a)
-
-    List = []
-    answ = []
-    for i in range(len(plaintext)):
-        notlow = 0 if plaintext[i].islower() else 1
-        a = ord(plaintext[i]) + shift[i] if notlow == 0 else ord(plaintext[i].lower()) + shift[i]
-        if 97 <= a <= 122:
-            List.append(a)
-        elif a <= 64:
-            List.append(a - shift[i])
+        if ord(keyword[i]) - ord("A") > 25:
+            j = ord(keyword[i]) - ord("a")
         else:
-            List.append(a - 26)
+            j = ord(keyword[i]) - ord("A")
+        shift.append(j)
+
+    list_ = []
+    ciphertext = ""
+    for i, letter in enumerate(plaintext):
+        notlow = 0 if letter.islower() else 1
+        if notlow == 0:
+            current_symbol = ord(letter) + shift[i]
+        else:
+            current_symbol = ord(letter.lower()) + shift[i]
+
+        if ord("a") <= current_symbol <= ord("z"):
+            list_.append(current_symbol)
+        elif current_symbol <= ord("A") - 1:
+            list_.append(current_symbol - shift[i])
+        else:
+            list_.append(current_symbol - 26)
 
         if notlow == 0:
-            answ.append(chr(List[i]))
+            ciphertext += chr(list_[i])
         else:
-            b = chr(List[i]).upper()
-            answ.append(b)
-
-    ciphertext = "".join([i for i in answ])
+            b = chr(list_[i]).upper()
+            ciphertext += b
 
     return ciphertext
 
@@ -49,7 +54,7 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     'PYTHON'
     >>> decrypt_vigenere("python", "a")
     'python'
-        >>> decrypt_vigenere("LXFOPVEFRNHR", "LEMON")
+    >>> decrypt_vigenere("LXFOPVEFRNHR", "LEMON")
     'ATTACKATDAWN'
     """
     if len(ciphertext) == 0:
@@ -58,26 +63,32 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
         keyword += keyword
     shift = []
     for i in range(len(ciphertext)):
-        a = ord(keyword[i]) - 97 if ord(keyword[i]) - 65 > 25 else ord(keyword[i]) - 65
-        shift.append(a)
-
-    List = []
-    answ = []
-    for i in range(len(ciphertext)):
-        notlow = 0 if ciphertext[i].islower() else 1
-        a = ord(ciphertext[i]) - shift[i] if notlow == 0 else ord(ciphertext[i].lower()) - shift[i]
-        if 97 <= a <= 122:
-            List.append(a)
-        elif a <= 64:
-            List.append(a + shift[i])
+        if ord(keyword[i]) - ord("A") > 25:
+            j = ord(keyword[i]) - ord("a")
         else:
-            List.append(a + 26)
+            j = ord(keyword[i]) - ord("A")
+        shift.append(j)
+
+    list_ = []
+    plaintext = ""
+    for i, letter in enumerate(ciphertext):
+        notlow = 0 if letter.islower() else 1
+        if notlow == 0:
+            current_symbol = ord(letter) - shift[i]
+        else:
+            current_symbol = ord(letter.lower()) - shift[i]
+
+        if ord("a") <= current_symbol <= ord("z"):
+            list_.append(current_symbol)
+        elif current_symbol <= ord("A") - 1:
+            list_.append(current_symbol + shift[i])
+        else:
+            list_.append(current_symbol + 26)
 
         if notlow == 0:
-            answ.append(chr(List[i]))
+            plaintext += chr(list_[i])
         else:
-            b = chr(List[i]).upper()
-            answ.append(b)
+            b = chr(list_[i]).upper()
+            plaintext += b
 
-    plaintext = "".join([i for i in answ])
     return plaintext
