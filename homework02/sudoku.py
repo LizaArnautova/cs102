@@ -87,9 +87,9 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     row, col = pos
     row = row - row % 3
     col = col - col % 3
-    answer = get_row(grid, (row, col))[col : col + 3]
-    answer += get_row(grid, (row + 1, col))[col : col + 3]
-    answer += get_row(grid, (row + 2, col))[col : col + 3]
+    answer = get_row(grid, (row, col))[col: col + 3]
+    answer += get_row(grid, (row + 1, col))[col: col + 3]
+    answer += get_row(grid, (row + 2, col))[col: col + 3]
     return answer
 
 
@@ -210,7 +210,7 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     for i in range(9):
         a = random.choice(options)
         options.remove(a)
-        grid[0].append(a) # просто рандомно сгенерировать первую строчку
+        grid[0].append(a)  # рандомно сгенерировать первую строчку
 
     for i in range(1, 9):
         grid.append([])
