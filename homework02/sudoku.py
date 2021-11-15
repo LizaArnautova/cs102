@@ -87,9 +87,10 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     row, col = pos
     row = row - row % 3
     col = col - col % 3
-    answ = (get_row(grid, (row, col))[col: col + 3]
-            + get_row(grid, (row + 1, col))[col: col + 3]
-            + get_row(grid, (row + 2, col))[col: col + 3]
+    answ = (
+        get_row(grid, (row, col))[col: col + 3]
+        + get_row(grid, (row + 1, col))[col: col + 3]
+        + get_row(grid, (row + 2, col))[col: col + 3]
     )
     return answ
 
