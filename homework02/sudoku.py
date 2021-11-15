@@ -203,7 +203,7 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     >>> check_solution(solution)
     True
     """
-    generated_grid = [[]]  # type: List[List[str]]
+    generated_grid = [[]]  # type: list
     options = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
     for i in range(9):
         a = random.choice(options)
@@ -223,7 +223,7 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     while numbers_del != (sum(1 for row in generated_grid for e in row if e == ".")):
         x = randint(0, 8)
         y = randint(0, 8)
-        grid[x][y] = "."
+        generated_grid[x][y] = "."
     return generated_grid
 
 
