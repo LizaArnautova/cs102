@@ -7,7 +7,7 @@ T = tp.TypeVar("T")
 
 
 def read_sudoku(path: tp.Union[str, pathlib.Path]) -> tp.List[tp.List[str]]:
-    """ Прочитать Судоку из указанного файла """
+    """Прочитать Судоку из указанного файла"""
     path = pathlib.Path(path)
     with path.open() as f:
         puzzle = f.read()
@@ -21,7 +21,7 @@ def create_grid(puzzle: str) -> tp.List[tp.List[str]]:
 
 
 def display(grid: tp.List[tp.List[str]]) -> None:
-    """Вывод Судоку """
+    """Вывод Судоку"""
     width = 2
     line = "+".join(["-" * (width * 3)] * 3)
     for row in range(9):
@@ -87,8 +87,10 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     row, col = pos
     row = row - row % 3
     col = col - col % 3
-    answ = get_row(grid, (row, col))[col: col + 3] + get_row(grid, (row + 1, col))[col: col + 3] + get_row(grid, (
-        row + 2, col))[col: col + 3]
+    answ = (get_row(grid, (row, col))[col: col + 3]
+            + get_row(grid, (row + 1, col))[col: col + 3]
+            + get_row(grid, (row + 2, col))[col: col + 3]
+            )
     return answ
 
 
@@ -142,7 +144,7 @@ def isValid(grid, i, j, e):
 
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
-    """ Как решать Судоку?
+    """Как решать Судоку?
         1. Найти свободную позицию
         2. Найти все возможные значения, которые могут находиться на этой позиции
         3. Для каждого возможного значения:
@@ -163,13 +165,13 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
                 grid[i][j] = e
                 if solve(grid):
                     return grid
-                grid[i][j] = '.'
+                grid[i][j] = "."
         return False
     return grid
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
-    """ Если решение solution верно, то вернуть True, в противном случае False
+    """Если решение solution верно, то вернуть True, в противном случае False
 
     >>> solution = [['5', '3', '4', '6', '7', '8', '9', '1', '2'], ['6', '7', '2', '1', '9', '5', '3', '4', '8'], ['1', '9', '8', '3', '4', '2', '5', '6', '7'], ['8', '5', '9', '7', '6', '1', '4', '2', '3'],['4', '2', '6', '8', '5', '3', '7', '9', '1'], ['7', '1', '3', '9', '2', '4', '8', '5', '6'],['9', '6', '1', '5', '3', '7', '2', '8', '4'], ['2', '8', '7', '4', '1', '9', '6', '3', '5'],['3', '4', '5', '2', '8', '6', '1', '7', '9']]
     >>> check_solution(solution)
@@ -234,7 +236,7 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     numbers_del = 81 - N
     if numbers_del < 0:
         return grid
-    while numbers_del != (sum(1 for row in grid for e in row if e == '.')):
+    while numbers_del != (sum(1 for row in grid for e in row if e == ".")):
         x = randint(0, 8)
         y = randint(0, 8)
         grid[x][y] = "."
