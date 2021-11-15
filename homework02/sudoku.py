@@ -107,7 +107,7 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
         if "." in grid[i]:
             return (i, grid[i].index("."))
             break
-    return -1, -1
+    return set()
 
 
 def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
@@ -128,20 +128,6 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     return all_options.difference(set_from_col, set_from_row, set_from_block)
 
 
-def isValid(grid, i, j, e):
-    rowOk = all([e != grid[i][x] for x in range(9)])
-    if rowOk:
-        columnOk = all([e != grid[x][j] for x in range(9)])
-        if columnOk:
-            secTopX, secTopY = 3 * (i // 3), 3 * (j // 3)
-            for x in range(secTopX, secTopX + 3):
-                for y in range(secTopY, secTopY + 3):
-                    if grid[x][y] == e:
-                        return False
-            return True
-    return False
-
-
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     """Как решать Судоку?
         1. Найти свободную позицию
@@ -155,18 +141,16 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     [['5', '3', '4', '6', '7', '8', '9', '1', '2'], ['6', '7', '2', '1', '9', '5', '3', '4', '8'], ['1', '9', '8', '3', '4', '2', '5', '6', '7'], ['8', '5', '9', '7', '6', '1', '4', '2', '3'], ['4', '2', '6', '8', '5', '3', '7', '9', '1'], ['7', '1', '3', '9', '2', '4', '8', '5', '6'], ['9', '6', '1', '5', '3', '7', '2', '8', '4'], ['2', '8', '7', '4', '1', '9', '6', '3', '5'], ['3', '4', '5', '2', '8', '6', '1', '7', '9']]
     """
 
-    if find_empty_positions(grid):
-        i, j = find_empty_positions(grid)
-        if i == -1:
-            return grid
-        for e in ("1", "2", "3", "4", "5", "6", "7", "8", "9"):
-            if isValid(grid, i, j, e):
-                grid[i][j] = e
+    pos = find_empty_positions(grid)
+    if pos:
+        if find_possible_values(grid, pos) != set():
+            for n in find_possible_values(grid, pos):
+                grid[pos[0]][pos[1]] = n
                 if solve(grid):
                     return grid
-                grid[i][j] = "."
-        return False
-    return grid
+                grid[pos[0]][pos[1]] = "."
+    else:
+        return grid
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
@@ -219,12 +203,15 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     >>> check_solution(solution)
     True
     """
-    grid = [[]]
+    grid = []
+
+    grid.append([])
     options = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
     for i in range(9):
         a = random.choice(options)
         options.remove(a)
-        grid[0].append(a)
+        grid[0].append(a) # просто рандомно сгенерировать первую строчку
+
     for i in range(1, 9):
         grid.append([])
         for j in range(9):
