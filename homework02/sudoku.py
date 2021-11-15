@@ -93,7 +93,7 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     return answer
 
 
-def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[int, int]]:
+def find_empty_positions(grid: tp.List[tp.List[str]]):
     """Найти первую свободную позицию в пазле
 
     >>> find_empty_positions([['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']])
@@ -203,8 +203,7 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     >>> check_solution(solution)
     True
     """
-    generated_grid = []
-    generated_grid.append([])
+    generated_grid = [[]] # type: List[List[str]]
     options = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
     for i in range(9):
         a = random.choice(options)
