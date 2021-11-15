@@ -105,7 +105,7 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
     """
     for i in range(len(grid)):
         if "." in grid[i]:
-            return (i, grid[i].index("."))
+            return i, grid[i].index(".")
             break
     return set()
 
@@ -128,7 +128,7 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     return all_options.difference(set_from_col, set_from_row, set_from_block)
 
 
-def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
+def solve(grid: tp.List[tp.List[str]]):
     """Как решать Судоку?
         1. Найти свободную позицию
         2. Найти все возможные значения, которые могут находиться на этой позиции
@@ -203,30 +203,29 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     >>> check_solution(solution)
     True
     """
-    grid = []
-
-    grid.append([])
+    generated_grid = []
+    generated_grid.append([])
     options = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
     for i in range(9):
         a = random.choice(options)
         options.remove(a)
-        grid[0].append(a)  # рандомно сгенерировать первую строчку
+        generated_grid[0].append(a)  # рандомно сгенерировать первую строчку
 
     for i in range(1, 9):
-        grid.append([])
+        generated_grid.append([])
         for j in range(9):
-            grid[i].append(".")
-    solve(grid)
+            generated_grid[i].append(".")
+    solve(generated_grid)
     # просто заполненная судоку
 
     numbers_del = 81 - N
     if numbers_del < 0:
-        return grid
-    while numbers_del != (sum(1 for row in grid for e in row if e == ".")):
+        return generated_grid
+    while numbers_del != (sum(1 for row in generated_grid for e in row if e == ".")):
         x = randint(0, 8)
         y = randint(0, 8)
         grid[x][y] = "."
-    return grid
+    return generated_grid
 
 
 if __name__ == "__main__":
