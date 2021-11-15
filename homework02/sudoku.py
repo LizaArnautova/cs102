@@ -170,13 +170,13 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     False
     """
     for i in range(len(solution)):
-        set_from_row = set(get_row(solution, (i, 0)))
+        set_from_row = set(get_row(solution, (i, 0))) - set(".")
         if len(set_from_row) != 9:
             return False
-        set_from_col = set(get_col(solution, (0, i)))
+        set_from_col = set(get_col(solution, (0, i))) - set(".")
         if len(set_from_col) != 9:
             return False
-        set_from_block = set(get_block(solution, (i, i)))
+        set_from_block = set(get_block(solution, (i, i))) - set(".")
         if len(set_from_block) != 9:
             return False
     return True
