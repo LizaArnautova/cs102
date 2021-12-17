@@ -9,17 +9,17 @@ def create_grid(rows: int = 15, cols: int = 15) -> List[List[Union[str, int]]]:
     return [["■"] * cols for _ in range(rows)]
 
 
-def remove_wall(
-        grid: List[List[Union[str, int]]], coord: Tuple[int, int]
-) -> List[List[Union[str, int]]]:
-    """
-
-    :param grid:
-    :param coord:
-    :return:
-    """
-
-    pass
+# def remove_wall(
+#         grid: List[List[Union[str, int]]], coord: Tuple[int, int]
+# ) -> List[List[Union[str, int]]]:
+#     """
+#
+#     :param grid:
+#     :param coord:
+#     :return:
+#     """
+#
+#     pass
 
 
 def bin_tree_maze(
@@ -183,7 +183,7 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
     :param coord:
     :return:
     """
-    if coord in ((0, 0), (14, 14), (0, 14), (14, 0)):
+    if coord in ((0, 0), (len(grid), len(grid[0])), (0, len(grid[0])), (len(grid), 0)):
         return True  # если в углу
 
     y, x = coord
@@ -253,7 +253,7 @@ def add_path_to_grid(
 
 if __name__ == "__main__":
     print(pd.DataFrame(bin_tree_maze(15, 15)))
-    GRID = bin_tree_maze(15, 15)
+    GRID = bin_tree_maze(20, 20)
     print(pd.DataFrame(GRID))
     _, PATH = solve_maze(GRID)
     MAZE = add_path_to_grid(GRID, PATH)
