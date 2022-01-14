@@ -12,7 +12,7 @@ Grid = tp.List[Cells]
 class GameOfLife:
     def __init__(
         self, width: int = 640, height: int = 480, cell_size: int = 10, speed: int = 10
-    ) -> None:
+    ):
         self.width = width
         self.height = height
         self.cell_size = cell_size
@@ -30,7 +30,7 @@ class GameOfLife:
         self.speed = speed
 
         # Поле
-        self.grid = None
+        self.grid = self.create_grid(randomize=True)
 
     def draw_lines(self) -> None:
         """Отрисовать сетку"""
@@ -47,12 +47,12 @@ class GameOfLife:
         self.screen.fill(pygame.Color("white"))
 
         # Создание списка клеток
-        self.grid = self.create_grid(self)
+        self.grid = self.create_grid(randomize=True)
 
         running = True
         while running:
             for event in pygame.event.get():
-                if event.type == QUIT:
+                if event.type == pygame.QUIT:
                     running = False
 
             # Отрисовка списка клеток
