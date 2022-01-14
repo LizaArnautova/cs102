@@ -117,7 +117,7 @@ def shortest_path(
     :return:
     """
     x, y = exit_coord
-    k = grid[x][y] - 1
+    k = int(grid[x][y]) - 1
     path = []
     cur_cord = x, y
     path.append(cur_cord)
