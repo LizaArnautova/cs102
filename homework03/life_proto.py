@@ -11,7 +11,7 @@ Grid = tp.List[Cells]
 
 class GameOfLife:
     def __init__(
-            self, width: int = 640, height: int = 480, cell_size: int = 10, speed: int = 10
+        self, width: int = 640, height: int = 480, cell_size: int = 10, speed: int = 10
     ) -> None:
         self.width = width
         self.height = height
@@ -33,14 +33,14 @@ class GameOfLife:
         self.grid = None
 
     def draw_lines(self) -> None:
-        """ Отрисовать сетку """
+        """Отрисовать сетку"""
         for x in range(0, self.width, self.cell_size):
             pygame.draw.line(self.screen, pygame.Color("black"), (x, 0), (x, self.height))
         for y in range(0, self.height, self.cell_size):
             pygame.draw.line(self.screen, pygame.Color("black"), (0, y), (self.width, y))
 
     def run(self) -> None:
-        """ Запустить игру """
+        """Запустить игру"""
         pygame.init()
         clock = pygame.time.Clock()
         pygame.display.set_caption("Game of Life")
@@ -85,7 +85,10 @@ class GameOfLife:
 
         """
         if randomize:
-            grid = [[random.randint(0, 1) for i in range(self.cell_width)] for j in range(self.cell_height)]
+            grid = [
+                [random.randint(0, 1) for i in range(self.cell_width)]
+                for j in range(self.cell_height)
+            ]
         else:
             grid = [[0 for i in range(self.cell_width)] for j in range(self.cell_height)]
         return grid
@@ -98,10 +101,10 @@ class GameOfLife:
             for x in range(self.cell_height):
                 if self.grid[x][y] == 0:
                     rect = (y * self.cell_size, x * self.cell_size, self.cell_size, self.cell_size)
-                    pygame.draw.rect(self.screen, pygame.Color('white'), rect)
+                    pygame.draw.rect(self.screen, pygame.Color("white"), rect)
                 else:
                     rect = (y * self.cell_size, x * self.cell_size, self.cell_size, self.cell_size)
-                    pygame.draw.rect(self.screen, pygame.Color('green'), rect)
+                    pygame.draw.rect(self.screen, pygame.Color("green"), rect)
 
     def get_neighbours(self, cell: Cell) -> Cells:
         """
@@ -124,31 +127,70 @@ class GameOfLife:
         y, x = cell
         cells = []
         if 0 < x < len(self.grid[0]) - 1 and 0 < y < len(self.grid) - 1:  # центр
-            cells = [self.grid[y - 1][x - 1], self.grid[y - 1][x], self.grid[y - 1][x + 1],
-                     self.grid[y][x - 1], self.grid[y][x + 1],
-                     self.grid[y + 1][x - 1], self.grid[y + 1][x], self.grid[y + 1][x + 1]]
+            cells = [
+                self.grid[y - 1][x - 1],
+                self.grid[y - 1][x],
+                self.grid[y - 1][x + 1],
+                self.grid[y][x - 1],
+                self.grid[y][x + 1],
+                self.grid[y + 1][x - 1],
+                self.grid[y + 1][x],
+                self.grid[y + 1][x + 1],
+            ]
 
         if x == y and x == 0:
             cells = [self.grid[y][x + 1], self.grid[y + 1][x], self.grid[y + 1][x + 1]]  # лево верх
         if x == 0 and y == len(self.grid) - 1:
-            cells = [self.grid[y][x + 1], self.grid[y - 1][x], self.grid[y - 1][x + 1]]  # лево низ
+            cells = [
+                self.grid[y][x + 1],
+                self.grid[y - 1][x],
+                self.grid[y - 1][x + 1],
+            ]  # лево низ
         if x == len(self.grid[0]) - 1 and y == 0:
-            cells = [self.grid[y][x - 1], self.grid[y + 1][x - 1], self.grid[y + 1][x]]  # право верх
+            cells = [
+                self.grid[y][x - 1],
+                self.grid[y + 1][x - 1],
+                self.grid[y + 1][x],
+            ]  # право верх
         if x == len(self.grid[0]) - 1 and y == len(self.grid) - 1:
-            cells = [self.grid[y][x - 1], self.grid[y - 1][x - 1], self.grid[y - 1][x]]  # право низ
+            cells = [
+                self.grid[y][x - 1],
+                self.grid[y - 1][x - 1],
+                self.grid[y - 1][x],
+            ]  # право низ
 
         if x == 0 and 0 < y < len(self.grid) - 1:  # лево
-            cells = [self.grid[y - 1][x], self.grid[y - 1][x + 1], self.grid[y][x + 1], self.grid[y + 1][x],
-                     self.grid[y + 1][x + 1]]
+            cells = [
+                self.grid[y - 1][x],
+                self.grid[y - 1][x + 1],
+                self.grid[y][x + 1],
+                self.grid[y + 1][x],
+                self.grid[y + 1][x + 1],
+            ]
         if 0 < x < len(self.grid[0]) - 1 and y == 0:  # вверх
-            cells = [self.grid[y][x - 1], self.grid[y][x + 1], self.grid[y + 1][x - 1], self.grid[y + 1][x],
-                     self.grid[y + 1][x + 1]]
+            cells = [
+                self.grid[y][x - 1],
+                self.grid[y][x + 1],
+                self.grid[y + 1][x - 1],
+                self.grid[y + 1][x],
+                self.grid[y + 1][x + 1],
+            ]
         if x == len(self.grid[0]) - 1 and 0 < y < len(self.grid) - 1:  # право
-            cells = [self.grid[y - 1][x - 1], self.grid[y - 1][x], self.grid[y][x - 1], self.grid[y + 1][x - 1],
-                     self.grid[y + 1][x]]
+            cells = [
+                self.grid[y - 1][x - 1],
+                self.grid[y - 1][x],
+                self.grid[y][x - 1],
+                self.grid[y + 1][x - 1],
+                self.grid[y + 1][x],
+            ]
         if 0 < x < len(self.grid[0]) - 1 and y == len(self.grid) - 1:  # низ
-            cells = [self.grid[y - 1][x - 1], self.grid[y - 1][x], self.grid[y - 1][x + 1], self.grid[y][x - 1],
-                     self.grid[y][x + 1]]
+            cells = [
+                self.grid[y - 1][x - 1],
+                self.grid[y - 1][x],
+                self.grid[y - 1][x + 1],
+                self.grid[y][x - 1],
+                self.grid[y][x + 1],
+            ]
 
         return cells
 
@@ -176,7 +218,6 @@ class GameOfLife:
         return newgrid
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     game = GameOfLife(320, 240, 20)
-    # game = GameOfLife()
     game.run()

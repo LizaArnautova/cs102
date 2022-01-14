@@ -38,42 +38,77 @@ class GameOfLife:
     def get_neighbours(self, cell: Cell) -> Cells:
         y, x = cell
         cells = []
-        if 0 < x < len(self.curr_generation[0]) - 1 and 0 < y < len(self.curr_generation) - 1:  # центр
-            cells = [self.curr_generation[y - 1][x - 1], self.curr_generation[y - 1][x],
-                     self.curr_generation[y - 1][x + 1],
-                     self.curr_generation[y][x - 1], self.curr_generation[y][x + 1],
-                     self.curr_generation[y + 1][x - 1], self.curr_generation[y + 1][x],
-                     self.curr_generation[y + 1][x + 1]]
+        if (
+            0 < x < len(self.curr_generation[0]) - 1 and 0 < y < len(self.curr_generation) - 1
+        ):  # центр
+            cells = [
+                self.curr_generation[y - 1][x - 1],
+                self.curr_generation[y - 1][x],
+                self.curr_generation[y - 1][x + 1],
+                self.curr_generation[y][x - 1],
+                self.curr_generation[y][x + 1],
+                self.curr_generation[y + 1][x - 1],
+                self.curr_generation[y + 1][x],
+                self.curr_generation[y + 1][x + 1],
+            ]
 
         if x == y and x == 0:
-            cells = [self.curr_generation[y][x + 1], self.curr_generation[y + 1][x],
-                     self.curr_generation[y + 1][x + 1]]  # лево верх
+            cells = [
+                self.curr_generation[y][x + 1],
+                self.curr_generation[y + 1][x],
+                self.curr_generation[y + 1][x + 1],
+            ]  # лево верх
         if x == 0 and y == len(self.curr_generation) - 1:
-            cells = [self.curr_generation[y][x + 1], self.curr_generation[y - 1][x],
-                     self.curr_generation[y - 1][x + 1]]  # лево низ
+            cells = [
+                self.curr_generation[y][x + 1],
+                self.curr_generation[y - 1][x],
+                self.curr_generation[y - 1][x + 1],
+            ]  # лево низ
         if x == len(self.curr_generation[0]) - 1 and y == 0:
-            cells = [self.curr_generation[y][x - 1], self.curr_generation[y + 1][x - 1],
-                     self.curr_generation[y + 1][x]]  # право верх
+            cells = [
+                self.curr_generation[y][x - 1],
+                self.curr_generation[y + 1][x - 1],
+                self.curr_generation[y + 1][x],
+            ]  # право верх
         if x == len(self.curr_generation[0]) - 1 and y == len(self.curr_generation) - 1:
-            cells = [self.curr_generation[y][x - 1], self.curr_generation[y - 1][x - 1],
-                     self.curr_generation[y - 1][x]]  # право низ
+            cells = [
+                self.curr_generation[y][x - 1],
+                self.curr_generation[y - 1][x - 1],
+                self.curr_generation[y - 1][x],
+            ]  # право низ
 
         if x == 0 and 0 < y < len(self.curr_generation) - 1:  # лево
-            cells = [self.curr_generation[y - 1][x], self.curr_generation[y - 1][x + 1], self.curr_generation[y][x + 1],
-                     self.curr_generation[y + 1][x],
-                     self.curr_generation[y + 1][x + 1]]
+            cells = [
+                self.curr_generation[y - 1][x],
+                self.curr_generation[y - 1][x + 1],
+                self.curr_generation[y][x + 1],
+                self.curr_generation[y + 1][x],
+                self.curr_generation[y + 1][x + 1],
+            ]
         if 0 < x < len(self.curr_generation[0]) - 1 and y == 0:  # вверх
-            cells = [self.curr_generation[y][x - 1], self.curr_generation[y][x + 1], self.curr_generation[y + 1][x - 1],
-                     self.curr_generation[y + 1][x],
-                     self.curr_generation[y + 1][x + 1]]
+            cells = [
+                self.curr_generation[y][x - 1],
+                self.curr_generation[y][x + 1],
+                self.curr_generation[y + 1][x - 1],
+                self.curr_generation[y + 1][x],
+                self.curr_generation[y + 1][x + 1],
+            ]
         if x == len(self.curr_generation[0]) - 1 and 0 < y < len(self.curr_generation) - 1:  # право
-            cells = [self.curr_generation[y - 1][x - 1], self.curr_generation[y - 1][x], self.curr_generation[y][x - 1],
-                     self.curr_generation[y + 1][x - 1],
-                     self.curr_generation[y + 1][x]]
+            cells = [
+                self.curr_generation[y - 1][x - 1],
+                self.curr_generation[y - 1][x],
+                self.curr_generation[y][x - 1],
+                self.curr_generation[y + 1][x - 1],
+                self.curr_generation[y + 1][x],
+            ]
         if 0 < x < len(self.curr_generation[0]) - 1 and y == len(self.curr_generation) - 1:  # низ
-            cells = [self.curr_generation[y - 1][x - 1], self.curr_generation[y - 1][x],
-                     self.curr_generation[y - 1][x + 1], self.curr_generation[y][x - 1],
-                     self.curr_generation[y][x + 1]]
+            cells = [
+                self.curr_generation[y - 1][x - 1],
+                self.curr_generation[y - 1][x],
+                self.curr_generation[y - 1][x + 1],
+                self.curr_generation[y][x - 1],
+                self.curr_generation[y][x + 1],
+            ]
 
         return cells
 
@@ -139,8 +174,3 @@ class GameOfLife:
                 for j in i:
                     stroka += str(j)
                 outp.write(stroka + "\n")
-
-if __name__ == '__main__':
-    game = GameOfLife((5, 6), 20)
-    # game = GameOfLife()
-    game.save("save.txt")
