@@ -4,17 +4,28 @@ import typing as tp
 
 def is_prime(n: int) -> bool:
     """
-    Tests to see if a number is prime.
-
     >>> is_prime(2)
     True
     >>> is_prime(11)
     True
     >>> is_prime(8)
     False
+    >>> is_prime(1)
+    False
+    >>> is_prime(-7)
+    True
+    >>> is_prime(-10)
+    False
     """
-    # PUT YOUR CODE HERE
-    pass
+    if n < 0:
+        n = n * -1
+    if n == 1:
+        return False
+
+    i = 2
+    while i * i <= n and n % i != 0:
+        i += 1
+    return i * i > n
 
 
 def gcd(a: int, b: int) -> int:
@@ -26,8 +37,9 @@ def gcd(a: int, b: int) -> int:
     >>> gcd(3, 7)
     1
     """
-    # PUT YOUR CODE HERE
-    pass
+    while b:
+        a, b = b, a % b
+    return a
 
 
 def multiplicative_inverse(e: int, phi: int) -> int:
@@ -38,8 +50,15 @@ def multiplicative_inverse(e: int, phi: int) -> int:
     >>> multiplicative_inverse(7, 40)
     23
     """
-    # PUT YOUR CODE HERE
-    pass
+    x, xx, y, yy = 1, 0, 0, 1
+    c = phi
+    while phi:
+        q = e // phi
+        e, phi = phi, e % phi
+        x, xx = xx, x - xx * q
+        y, yy = yy, y - yy * q
+    d = x % c
+    return d
 
 
 def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
@@ -48,11 +67,9 @@ def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[in
     elif p == q:
         raise ValueError("p and q cannot be equal")
 
-    # n = pq
-    # PUT YOUR CODE HERE
+    n = p * q
 
-    # phi = (p-1)(q-1)
-    # PUT YOUR CODE HERE
+    phi = (p - 1) * (q - 1)
 
     # Choose an integer e such that e and phi(n) are coprime
     e = random.randrange(1, phi)
@@ -68,7 +85,7 @@ def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[in
 
     # Return public and private keypair
     # Public key is (e, n) and private key is (d, n)
-    return ((e, n), (d, n))
+    return (e, n), (d, n)
 
 
 def encrypt(pk: tp.Tuple[int, int], plaintext: str) -> tp.List[int]:
