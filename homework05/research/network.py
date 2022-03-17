@@ -9,7 +9,7 @@ from vkapi.friends import get_friends, get_mutual
 
 
 def ego_network(
-    user_id: tp.Optional[int] = None, friends: tp.Optional[tp.List[int]] = None
+        user_id: tp.Optional[int] = None, friends: tp.Optional[tp.List[int]] = None
 ) -> tp.List[tp.Tuple[int, int]]:
     """
     Построить эгоцентричный граф друзей.
@@ -24,15 +24,15 @@ def ego_network(
 
         myfriends = get_friends(user_id, fields=["id"]).items
         active_users = [
-            user["id"]
+            user["id"]  # type: ignore
             for user in myfriends
-            if not user.get("deactivated") and not user.get("is_closed")
+            if not user.get("deactivated") and not user.get("is_closed")  # type: ignore
         ]
     pairs = get_mutual(source_uid=user_id, target_uids=active_users)
 
     for pair in pairs:
-        for friend in pair["common_friends"]:
-            graph.append((pair["id"], friend))
+        for friend in pair["common_friends"]:  # type: ignore
+            graph.append((pair["id"], friend))  # type: ignore
 
     return graph
 
@@ -67,9 +67,9 @@ def get_communities(net: tp.List[tp.Tuple[int, int]]) -> tp.Dict[int, tp.List[in
 
 
 def describe_communities(
-    clusters: tp.Dict[int, tp.List[int]],
-    friends: tp.List[tp.Dict[str, tp.Any]],
-    fields: tp.Optional[tp.List[str]] = None,
+        clusters: tp.Dict[int, tp.List[int]],
+        friends: tp.List[tp.Dict[str, tp.Any]],
+        fields: tp.Optional[tp.List[str]] = None,
 ) -> pd.DataFrame:
     if fields is None:
         fields = ["first_name", "last_name"]
