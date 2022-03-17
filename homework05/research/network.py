@@ -84,5 +84,6 @@ def describe_communities(
     return pd.DataFrame(data=data, columns=["cluster"] + fields)
 
 
-net = ego_network(user_id=201856650)
-plot_ego_network(net)
+# if __name__ == "__main__":
+#     net = ego_network(user_id=201856650)
+#     plot_ego_network(net)
