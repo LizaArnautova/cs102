@@ -3,13 +3,14 @@ import math
 import time
 import typing as tp
 
+from vkapi import config
+from vkapi.exceptions import APIError
+from vkapi.session import Session
+
 # from homework05.vkapi import config
 # from homework05.vkapi.exceptions import APIError
 # from homework05.vkapi.session import Session
 
-from vkapi import config
-from vkapi.exceptions import APIError
-from vkapi.session import Session
 
 QueryParams = tp.Optional[tp.Dict[str, tp.Union[str, int]]]
 
@@ -21,7 +22,10 @@ class FriendsResponse:
 
 
 def get_friends(
-        user_id: int, count: int = 5000, offset: int = 0, fields: tp.Optional[tp.List[str]] = None
+    user_id: int,
+    count: int = 5000,
+    offset: int = 0,
+    fields: tp.Optional[tp.List[str]] = None,
 ) -> FriendsResponse:
     """
     Получить список идентификаторов друзей пользователя или расширенную информацию
@@ -48,7 +52,8 @@ def get_friends(
         )
 
         fr_resp = FriendsResponse(
-            friends_list.json()["response"]["count"], friends_list.json()["response"]["items"]
+            friends_list.json()["response"]["count"],
+            friends_list.json()["response"]["items"],
         )
     except:
         pass
