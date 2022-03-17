@@ -1,3 +1,6 @@
+# from homework05.vkapi import config
+# from homework05.vkapi.session import Session
+#
 from vkapi import config
 from vkapi.session import Session
 
