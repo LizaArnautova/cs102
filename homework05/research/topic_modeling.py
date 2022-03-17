@@ -4,6 +4,7 @@ from gensim.corpora import Dictionary
 from textacy import preprocessing
 from tqdm import tqdm
 
+# from homework05.vkapi.wall import get_wall_execute
 from vkapi.wall import get_wall_execute
 
 
