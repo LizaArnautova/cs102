@@ -43,7 +43,12 @@ class NaiveBayesClassifier:
             mx = float("-inf")
             expect = 0
             for lb in self.class_count:
-                m = sum([math.log(self.word_count[wrd][lb]) if self.word_count[wrd] else 0 for wrd in lst_x])
+                m = sum(
+                    [
+                        math.log(self.word_count[wrd][lb]) if self.word_count[wrd] else 0
+                        for wrd in lst_x
+                    ]
+                )
                 if m > mx:
                     mx = m
                     expect = lb

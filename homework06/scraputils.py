@@ -17,7 +17,8 @@ def extract_news(parser):
     ids = [post["id"] for post in body.findAll("tr", {"class": "athing"})]
     discussions = [
         body.findAll("span", {"id": f"unv_{id}"})[0].findNext("a", {"href": f"item?id={id}"}).text
-        for id in ids]
+        for id in ids
+    ]
     comments = [0 if element.isalpha() else int(element.split()[0]) for element in discussions]
 
     news_list = []
@@ -40,7 +41,7 @@ def extract_next_page(parser):
 
 
 def get_news(url, n_pages=1):
-    """ Collect news from a given web page """
+    """Collect news from a given web page"""
     news = []
     while n_pages:
         print("Collecting data from page: {}".format(url))
